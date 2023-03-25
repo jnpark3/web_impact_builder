@@ -1,0 +1,45 @@
+<div *ngIf="loading" class="width center-column gray" style="height: 100vh">
+  <div class="bold text">Loading...</div>
+</div>
+<div *ngIf="!loading" class="width large-padding row gray row" style="height: 100vh;">
+  <div class="card column" style="width: 400px; height: fit-content">
+    <div class="bold large-padding large-text">
+      Welcome back {{firstname}}!
+    </div>
+    <div class="hseparator"></div>
+    <div class="large-padding column">
+      <div class="bold text">
+        Notifications:
+      </div>
+      <div class="vgap"></div>
+      <div class="column width" style="width: 300px; max-height: 400px; overflow: auto;">
+        <div *ngFor="let notification of notifications.slice().reverse(); let i = index">
+          <div class="vgap"></div>
+          <div class="text">{{notification.title}}</div>
+          <div class="small-vgap"></div>
+          <div class="small-text">{{notification.message}}</div>
+          <div class="vgap"></div>
+          <div *ngIf="i != notifications.length - 1" class="hseparator gray"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hseparator"></div>
+    <div class="large-padding row">
+      <button class="shift_button button">Settings</button>
+      <div class="hgap"></div>
+      <button class="shift_button button" (click)="logout()">Log Out</button>
+    </div>
+  </div>
+  <div class="vlarge-hgap"></div>
+  <div class="column width height">
+    <div class="card padding width" style="height: fit-content; display: flex; justify-content: end;">
+      <button class="button">Create from Template</button>
+      <div class="hgap"></div>
+      <button class="orange_button">Create</button>
+    </div>
+    <div class="large-vgap"></div>
+    <div *ngIf="websites.length == 0" class="width center-column large-padding height large-text" style="color:#888">
+      You have no websites in progress
+    </div>
+  </div>
+</div>

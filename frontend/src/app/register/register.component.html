@@ -1,0 +1,38 @@
+<div style="height: 100vh; padding: 0;" class="gray center-column width">
+  <div class="card center-column" style="width: 400px; height: fit-content;">
+    <div class="large-padding width">
+      <div class="large-text">Register</div>
+      <div class="large-vgap"></div>
+      <div class="small-text">First Name</div>
+      <div class="small-vgap"></div>
+      <input type="text" class="input" placeholder="First Name" id="first-name-input"/>
+      <div class="vgap"></div>
+      <div class="small-text">Last Name</div>
+      <div class="small-vgap"></div>
+      <input type="text" class="input" placeholder="Last Name" id="last-name-input"/>
+      <div class="vgap"></div>
+      <div class="small-text">Email</div>
+      <div class="small-vgap"></div>
+      <input type="text" class="input" placeholder="Email" id="email-input"/>
+      <div class="vgap"></div>
+      <div class="small-text">Username</div>
+      <div class="small-vgap"></div>
+      <input type="text" class="input" placeholder="Username" id="username-input"/>
+      <div class="vgap"></div>
+      <div class="small-text">Password</div>
+      <input type="password" class="input" placeholder="Password" id="password-input"/>
+      <div *ngIf="error" class="vgap"></div>
+      <div *ngIf="error" class="orange-text">{{error_statement}}</div>
+    </div>
+    <div class="hseparator"></div>
+    <div class="large-padding center-coumn">
+      <div class="center-row">
+        <button class="shift_button orange_button" (click)="register()">Register</button>
+      </div>
+      <div class="vgap"></div>
+      <div class="center-row width">
+        <button class="text_button" routerLink="/login">Already have an account?</button>
+      </div>
+    </div>
+  </div>
+</div>
