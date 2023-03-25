@@ -1,1 +1,36 @@
-Creator
+<div *ngIf="loading" class="width center-column gray" style="height: 100vh">
+    <div class="bold text">Loading...</div>
+</div>
+<div *ngIf="!loading" class="width gray column" style="height: 100vh;">
+    <div class="large-padding width row center" style="height: fit-content; background-color: white;">
+        <button class="shift_button button center-row" style="aspect-ratio: 1 / 1;" (click)="backToMenu()">
+            <fa-icon class="ico fa-lg shift_button" [icon]="back_icon"></fa-icon>
+        </button>
+        <div class="hgap"></div>
+        <div class="column">
+            <div class="large-text bold height" style="align-items: center">{{name}}</div>
+            <div class="small-vgap"></div>
+            <div class="small-text">Created: {{date}} - Status: {{status}}</div>
+        </div>
+    </div>
+    <div class="hseparator"></div>
+    <div class="row height width large-padding">
+        <div class="height" style="width: fit-content">
+            <button class="button center-row shift_button" style="aspect-ratio: 1 / 1;">
+                <fa-icon class="icon fa-lg" [icon]="icon_1"></fa-icon>
+            </button>
+            <div class="vgap"></div>
+            <button class="button center-row shift_button" style="aspect-ratio: 1 / 1;">
+                <fa-icon class="icon fa-lg" [icon]="icon_1"></fa-icon>
+            </button>
+        </div>
+        <div class="hgap"></div>
+        <div class="card height" style="min-width: 400px; width: 400px; overflow: auto">
+
+        </div>
+        <div class="hgap"></div>
+        <div class="card height" style="width: 100%; overflow: auto">
+
+        </div>
+    </div>
+</div>

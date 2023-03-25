@@ -55,7 +55,7 @@
       You have no websites in progress
     </div>
     <div style="display: flex; flex-wrap: wrap; width: 100%; flex-direction: row;">
-      <div *ngFor="let website of websites; let i = index" style="min-width: 300px; max-width: 300px; min-height: 225px; max-height: 225px; margin-bottom: 12px; margin-right: 12px;" class="card">
+      <div *ngFor="let website of websites; let i = index" style="min-width: 300px; max-width: 300px; min-height: 225px; max-height: 225px; margin-bottom: 12px; margin-right: 12px;" class="card shift_button">
         <div class="width" style="height: 50%; background-color: #888;"></div>
         <div class="width column padding" style="height: 50%; cursor: pointer;" (click)="open(website.id)">
           <div class="text">{{website.name}}</div>

@@ -159,42 +159,50 @@ button:active{
 
 .small-hgap{
   height: 100%;
-  width: 6px
+  width: 6px;
+  min-width: 6px;
 }
 
 .hgap{
   height: 100%;
-  width: 12px
+  width: 12px;
+  min-width: 12px;
 }
 
 .large-hgap{
   height: 100%;
-  width: 24px
+  width: 24px;
+  min-width: 24px;
 }
 
 .vlarge-hgap{
   height: 100%;
-  width: 32px
+  width: 32px;
+  min-width: 32px;
 }
 
 .small-vgap{
   width: 100%;
-  height: 6px
+  height: 6px;
+  min-height: 6px;
 }
 
 .vgap{
   width: 100%;
-  height: 12px
+  height: 12px;
+  min-height: 12px;
 }
 
 .large-vgap{
   width: 100%;
-  height: 24px
+  height: 24px;
+  min-height: 12px;
 }
 
 .vlarge-vgap{
   width: 100%;
-  height: 32px
+  height: 32px;
+  min-height: 32px;
 }
 
 /* Separator */
