@@ -24,6 +24,18 @@ export class CreatorComponent {
   category_id = 0;
   category_components = [];
 
+  items_list: string[] = ['Item 1', 'Item 2', 'Item 3'];
+
+  public sortableOptions: any = {
+    animation: 150,
+  };
+
+  onSort(event: any) {
+    const newOrder = event.to.map((element: any) => element.textContent.trim());
+
+    this.items_list = newOrder;
+  }
+
   constructor(private appService: AppService, private router: Router, private route: ActivatedRoute) {
     this.appService.verify().pipe().subscribe((data: any) => {
         if(!data.success){

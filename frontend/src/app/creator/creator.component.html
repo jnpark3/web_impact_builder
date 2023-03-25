@@ -16,7 +16,7 @@
     <div class="hseparator"></div>
     <div class="row height width large-padding">
         <div class="height" style="width: fit-content">
-            <button class="button center-row shift_button" style="aspect-ratio: 1 / 1;">
+            <button class="button center-row shift_button" style="aspect-ratio: 1 / 1;" (click)="changeType(1)">
                 <fa-icon class="icon fa-lg" [icon]="icon_1"></fa-icon>
             </button>
             <div class="vgap"></div>
@@ -26,10 +26,9 @@
         </div>
         <div class="hgap"></div>
         <div class="card height" style="min-width: 400px; width: 400px; overflow: auto">
-
         </div>
         <div class="hgap"></div>
-        <div class="card height" style="width: 100%; overflow: auto">
+        <div class="card height" style="width: 100%; overflow: auto" id="environment">
 
         </div>
     </div>
