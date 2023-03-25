@@ -1,3 +1,16 @@
+<div class="overlay center-column" id="overlay">
+  <div class="card large-padding column">
+    <div class="small-text">Website Name</div>
+    <div class="small-vgap"></div>
+    <input class="input" style="width: 300px" placeholder="Website Name" id="name-input"/>
+    <div class="large-vgap"></div>
+    <div class="row">
+      <button class="orange_button" (click)="create()">Create</button>
+      <div class="hgap"></div>
+      <button class="button" (click)="close()">Cancel</button>
+    </div>
+  </div>
+</div>
 <div *ngIf="loading" class="width center-column gray" style="height: 100vh">
   <div class="bold text">Loading...</div>
 </div>
@@ -35,11 +48,23 @@
     <div class="card padding width" style="height: fit-content; display: flex; justify-content: end;">
       <button class="button">Create from Template</button>
       <div class="hgap"></div>
-      <button class="orange_button">Create</button>
+      <button class="orange_button" (click)="popup()">Create</button>
     </div>
     <div class="large-vgap"></div>
     <div *ngIf="websites.length == 0" class="width center-column large-padding height large-text" style="color:#888">
       You have no websites in progress
+    </div>
+    <div style="display: flex; flex-wrap: wrap; width: 100%; flex-direction: row;">
+      <div *ngFor="let website of websites; let i = index" style="min-width: 300px; max-width: 300px; min-height: 225px; max-height: 225px; margin-bottom: 12px; margin-right: 12px;" class="card">
+        <div class="width" style="height: 50%; background-color: #888;"></div>
+        <div class="width column padding" style="height: 50%; cursor: pointer;" (click)="open(website.id)">
+          <div class="text">{{website.name}}</div>
+          <div class="small-vgap"></div>
+          <div class="small-text">{{website.date}}</div>
+          <div class="small-vgap"></div>
+          <div class="small-text">{{website.status}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -17,6 +17,7 @@ export class LoginComponent{
   error = false;
   loading = false;
   error_statement = "";
+  popup = false;
 
   login() {
       const username = (<HTMLInputElement>document.getElementById("username-input")).value

@@ -30,6 +30,11 @@ export class AppService {
     return this.http.post('http://localhost:3080/api/getinfo', {token: token});
   }
 
+  createWeb(name: string){
+    const token = sessionStorage.getItem("token");
+    return this.http.post('http://localhost:3080/api/createweb', {token: token, name: name});
+  }
+
   addToken(t: string){
     window.sessionStorage.setItem("token", t);
   }

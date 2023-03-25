@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MenuComponent } from './menu/menu.component';
+import { CreatorComponent } from './creator/creator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    MenuComponent
+    MenuComponent,
+    CreatorComponent
   ],
   imports: [
     HttpClientModule,

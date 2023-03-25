@@ -17,7 +17,6 @@ export class MenuComponent {
 
   constructor(private appService: AppService, private router: Router) {
     this.appService.verify().pipe().subscribe((data: any) => {
-        console.log(data)
         if(!data.success){
           this.router.navigate(['/login'])
         }
@@ -29,8 +28,40 @@ export class MenuComponent {
           this.websites = data2.payload.websites
           this.notifications = data2.payload.notifications
           this.loading = false;
+          console.log(this.websites)
       });
     });
+  }
+
+  popup(){
+    const ov = document.getElementById("overlay");
+    if(ov){
+      ov.style.zIndex = "9999";
+      ov.classList.add('visible');
+    }
+  }
+
+  close(){
+    const ov = document.getElementById("overlay");
+    if(ov){
+      ov.style.zIndex = "-1";
+      ov.classList.remove('visible');
+    }
+  }
+
+  create(){
+    const name = (<HTMLInputElement>document.getElementById("name-input")).value
+    this.appService.createWeb(name).pipe().subscribe((data: any) => {
+      this.close()
+      if(!data.success){
+        this.router.navigate(['/error'])
+      }
+      this.router.navigate(["/create", { id: data.payload }]);
+    });
+  }
+
+  open(id : number){
+    this.router.navigate(["/create", { id: id }]);
   }
 
   logout(){

@@ -73,7 +73,7 @@ router.route('/login').post( async (req, res) => {
     if(!user){
         res.send({
             success: false,
-            payload: 'Username or password incorrect'
+            payload: 'Username or password is incorrect'
         });
     }
 
@@ -90,7 +90,7 @@ router.route('/login').post( async (req, res) => {
     } else {
         res.send({
             success: false,
-            payload: 'Username or password incorrect'
+            payload: 'Username or password is incorrect'
         });
     }
 })
@@ -213,7 +213,10 @@ router.route('/createweb').post( async (req, res) => {
         const day = today.getDate().toString().padStart(2, "0");
         const year = today.getFullYear().toString().slice(-2);
         const formattedDate = `${month}/${day}/${year}`;
-        const id = user.websites.length
+        var id = user.websites.length
+        if(name.length == 0){
+            name = "Untitled Website"
+        }
         user.websites.push({
             xml: [],
             name: name,
@@ -221,7 +224,7 @@ router.route('/createweb').post( async (req, res) => {
             date: formattedDate,
             id: id
         })
-        await User.updateOne({ _id: user.id }, { $set: { websites: user.websites } })  
+        await User.updateOne({ _id: user._id }, { $set: { websites: user.websites } })  
     }catch(e){
         res.send({
             success: false, 
