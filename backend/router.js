@@ -222,6 +222,7 @@ router.route('/createweb').post( async (req, res) => {
             name: name,
             status: 'Not Published',
             date: formattedDate,
+            settings: {},
             id: id
         })
         await User.updateOne({ _id: user._id }, { $set: { websites: user.websites } })  
@@ -236,6 +237,47 @@ router.route('/createweb').post( async (req, res) => {
         success: true, 
         payload: id
     });
+})
+
+router.route('/getwebsite').post( async (req, res) => {
+    try{
+        var token = req.body.token;
+        var id = req.body.id;
+    } catch(e){
+        res.send({
+          success: false, 
+          payload: 'Internal Error: Request incorrectly formantted ' + e
+        });
+    }
+
+    try{
+        var user = jwt.verify(token, JWT_SECRET_KEY);
+        user = await User.findById( user.id ).lean();
+    } catch(e){
+        res.send({
+            success: false, 
+            payload: 'Network Error: Cannot reach server with error ' + e
+        });
+    }
+
+    try{
+        for(let i = 0; i < user.websites.length; i++){
+            if(user.websites[i].id = id){
+                res.send({
+                    success: true, 
+                    payload: user.websites[i]
+                });
+                return;
+            }
+        }
+        throw 'Strategy not found'
+    }catch(e){
+        console.log(e)
+        res.send({
+            success: false, 
+            payload: 'Internal error ' + e
+        });
+    }
 })
 
 module.exports = router;

@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { MenuComponent } from './menu/menu.component';
 import { CreatorComponent } from './creator/creator.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AppRoutingModule,
     MatIconModule,
     FontAwesomeModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent],
