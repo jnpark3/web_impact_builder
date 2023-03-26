@@ -26,9 +26,18 @@
   <div class="row width large-padding" style="height: calc(100% - 97.5px)">
     <div class="lim_height height" style="width: fit-content">
       <button
+        class="orange_button center-row shift_button"
+        style="aspect-ratio: 1 / 1;"
+        (click)="changeType(0)"
+      >
+        <fa-icon class="icon fa-lg" [icon]="save_icon"></fa-icon>
+      </button>
+      <div class="vgap"></div>
+      <button
         class="button center-row shift_button"
-        style="aspect-ratio: 1 / 1"
-        (click)="changeType(1)"
+        style="aspect-ratio: 1 / 1; background-color: #AAA;"
+        id="button_0"
+        (click)="changeType(0)"
       >
         <fa-icon class="icon fa-lg" [icon]="icon_1"></fa-icon>
       </button>
@@ -36,14 +45,52 @@
       <button
         class="button center-row shift_button"
         style="aspect-ratio: 1 / 1"
+        id="button_1"
+        (click)="changeType(1)"
       >
-        <fa-icon class="icon fa-lg" [icon]="icon_1"></fa-icon>
+        <fa-icon class="icon fa-lg" [icon]="icon_2"></fa-icon>
+      </button>
+      <div class="vgap"></div>
+      <button
+        class="button center-row shift_button"
+        style="aspect-ratio: 1 / 1"
+        id="button_2"
+        (click)="changeType(2)"
+      >
+        <fa-icon class="icon fa-lg" [icon]="icon_3"></fa-icon>
+      </button>
+      <div class="vgap"></div>
+      <button
+        class="button center-row shift_button"
+        style="aspect-ratio: 1 / 1"
+        id="button_3"
+        (click)="changeType(3)"
+      >
+        <fa-icon class="icon fa-lg" [icon]="icon_4"></fa-icon>
+      </button>
+      <div class="vgap"></div>
+      <button
+        class="button center-row shift_button"
+        style="aspect-ratio: 1 / 1"
+        id="button_4"
+        (click)="changeType(4)"
+      >
+        <fa-icon class="icon fa-lg" [icon]="icon_5"></fa-icon>
+      </button>
+      <div class="vgap"></div>
+      <button
+        class="button center-row shift_button"
+        style="aspect-ratio: 1 / 1"
+        id="button_5"
+        (click)="changeType(5)"
+      >
+        <fa-icon class="icon fa-lg" [icon]="icon_6"></fa-icon>
       </button>
     </div>
     <div class="lim_height hgap"></div>
     <div
       class="lim_height card height"
-      style="min-width: 400px; width: 400px; overflow: auto; "
+      style="min-width: 400px; width: 400px; overflow: auto"
     >
       <div
         cdkDropList
@@ -53,11 +100,22 @@
         class="drag-list"
       >
         <div class="vgap"></div>
-        <div class="padding large-text">{{category_names[category_id]}}</div>
-        <div class="drag-box padding column" *ngFor="let item of component_list" cdkDrag>
+        <div class="padding large-text">{{ category_names[category_id] }}</div>
+        <div
+          class="drag-box padding column"
+          *ngFor="let item of component_list"
+          cdkDrag
+        >
           <div class="width gray" style="height: 150px">
-            <div *ngFor="let box of item.minimap" [style.left.px]="box[0]" [style.top.px]="box[1]" [style.width.px]="box[2]" [style.height.px]="box[3]" [style.margin-bottom.px]="-box[3]" style="position: relative; background-color: #aaa;">
-            </div>
+            <div
+              *ngFor="let box of item.minimap"
+              [style.left.px]="box[0]"
+              [style.top.px]="box[1]"
+              [style.width.px]="box[2]"
+              [style.height.px]="box[3]"
+              [style.margin-bottom.px]="-box[3]"
+              style="position: relative; background-color: #aaa"
+            ></div>
           </div>
           <div class="small-vgap"></div>
           <div class="text" style="color: #888">{{ item.name }}</div>
@@ -65,14 +123,73 @@
       </div>
     </div>
     <div class="lim_height hgap"></div>
-    <div class="lim_height card height" style="width: 100%; overflow: auto;">
-      <div cdkDropList
-      #component_placer="cdkDropList"
-      [cdkDropListData]="html_components"
-      [cdkDropListConnectedTo]="[component_lists]"
-      (cdkDropListDropped)="drop($event)"
-      class="drag-list" style="min-height: 100%;">
-        <div class="drag-box" style="cursor: pointer; border-bottom: solid 0px #ccc; " *ngFor="let block of html_components" [innerHTML]="block" cdkDrag>
+    <div style="position: relative; width: 100%">
+      <div
+        class="card column"
+        style="
+          z-index: -1;
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          width: 350px;
+          height: fit-content;
+        "
+        id="editor"
+      >
+        <div class="text padding">Editor</div>
+        <div class="hseparator"></div>
+        <div class="padding">
+          <div *ngFor="let placeholder of editor_input_names; let i = index">
+            <div class="small-text">{{ editor_input_names[i] }}</div>
+            <div class="small-vgap"></div>
+            <input 
+                *ngIf="placeholder != 'Image'"
+              type="text"
+              class="input"
+              [placeholder]="placeholder"
+              [value]="editor_inputs[i]"
+              (input)="onType($event, i)"
+            />
+            <input 
+            *ngIf="placeholder == 'Image'"
+            type="file" 
+            (change)="onFileSelected($event, i)">
+
+            <div *ngIf="i != editor_input_names.length - 1" class="vgap"></div>
+          </div>
+        </div>
+        <div class="hseparator"></div>
+        <div class="text padding row">
+          <button class="shift_button orange_button" (click)="saveEditor()">Submit</button>
+          <div class="hgap"></div>
+          <button class="shift_button button" (click)="closeEditor()">Cancel</button>
+          <div class="hgap"></div>
+          <button class="shift_button button" (click)="discardEditor()">
+            <fa-icon
+              class="ico fa-lg shift_button"
+              [icon]="trash_icon"
+            ></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="lim_height card height" style="width: 100%; overflow: auto">
+        <div
+          cdkDropList
+          #component_placer="cdkDropList"
+          [cdkDropListData]="html_components"
+          [cdkDropListConnectedTo]="[component_lists]"
+          (cdkDropListDropped)="drop($event)"
+          class="drag-list"
+          style="min-height: 100%"
+        >
+          <div
+            (click)="openEditor(i)"
+            class="drag-box"
+            style="cursor: pointer; border-bottom: solid 0px #ccc"
+            *ngFor="let block of html_components; let i = index"
+            [innerHTML]="block"
+            cdkDrag
+          ></div>
         </div>
       </div>
     </div>
