@@ -280,4 +280,103 @@ router.route('/getwebsite').post( async (req, res) => {
     }
 })
 
+router.route('/createweb').post( async (req, res) => {
+    try{
+        var token = req.body.token;
+        var name = req.body.name;
+    } catch(e){
+        res.send({
+          success: false, 
+          payload: 'Internal Error: Request incorrectly formantted ' + e
+        });
+    }
+
+    try{
+        var user = jwt.verify(token, JWT_SECRET_KEY);
+        user = await User.findById( user.id ).lean();
+    } catch(e){
+        res.send({
+            success: false, 
+            payload: 'Network Error: Cannot reach server with error ' + e
+        });
+    }
+
+    try{
+        const today = new Date();
+        const month = (today.getMonth() + 1).toString().padStart(2, "0");
+        const day = today.getDate().toString().padStart(2, "0");
+        const year = today.getFullYear().toString().slice(-2);
+        const formattedDate = `${month}/${day}/${year}`;
+        var id = user.websites.length
+        if(name.length == 0){
+            name = "Untitled Website"
+        }
+        user.websites.push({
+            xml: [],
+            name: name,
+            status: 'Not Published',
+            date: formattedDate,
+            settings: {},
+            id: id
+        })
+        await User.updateOne({ _id: user._id }, { $set: { websites: user.websites } })  
+    }catch(e){
+        res.send({
+            success: false, 
+            payload: 'Network Error: Failed to add website with error ' + e
+        });
+    }
+
+    res.send({
+        success: true, 
+        payload: id
+    });
+})
+
+router.route('/surveyresponse').post( async (req, res) => {
+    try{
+        var token = req.body.token;
+        var response = req.body.response;
+    } catch(e){
+        res.send({
+          success: false, 
+          payload: 'Internal Error: Request incorrectly formantted ' + e
+        });
+    }
+
+    try{
+        var user = jwt.verify(token, JWT_SECRET_KEY);
+        user = await User.findById( user.id ).lean();
+    } catch(e){
+        res.send({
+            success: false, 
+            payload: 'Network Error: Cannot reach server with error ' + e
+        });
+    }
+
+    try{
+        const today = new Date();
+        const month = (today.getMonth() + 1).toString().padStart(2, "0");
+        const day = today.getDate().toString().padStart(2, "0");
+        const year = today.getFullYear().toString().slice(-2);
+        const formattedDate = `${month}/${day}/${year}`;
+        user.notifications.push({
+            title: 'You\'ve recieved a survey response!',
+            message: 'You recieved a survey response on ' + formattedDate + '. Response: ' + JSON.stringify(response)
+        },)
+        await User.updateOne({ _id: user._id }, { $set: { websites: user.notifications } })  
+    }catch(e){
+        console.log(e)
+        res.send({
+            success: false, 
+            payload: 'Internal error ' + e
+        });
+    }
+
+    res.send({
+        success: true, 
+        payload: 'Survey response noted'
+    });
+})
+
 module.exports = router;

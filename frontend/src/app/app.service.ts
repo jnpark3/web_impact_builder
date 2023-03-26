@@ -47,4 +47,9 @@ export class AppService {
   removeToken(){
     window.sessionStorage.setItem("token", "");
   }
+
+  surveyResponse(response: object){
+    const token = sessionStorage.getItem("token");
+    return this.http.post('http://localhost:3080/api/surveyresponse', {token: token, response: response});
+  }
 }
