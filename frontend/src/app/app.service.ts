@@ -35,6 +35,11 @@ export class AppService {
     return this.http.post('http://localhost:3080/api/createweb', {token: token, name: name});
   }
 
+  saveWeb(name: string, status: string, id: number, xml: {}[], settings: {}){
+    const token = sessionStorage.getItem("token");
+    return this.http.post('http://localhost:3080/api/saveweb', {token: token, name: name, xml: xml, id: id, settings: settings, status: status});
+  }
+
   getWebsite(id: number){
     const token = sessionStorage.getItem("token");
     return this.http.post('http://localhost:3080/api/getwebsite', {token: token, id: id});

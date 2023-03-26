@@ -67,9 +67,6 @@ router.route('/login').post( async (req, res) => {
             payload: 'Network issues, may not be connected to internet'
         })
     }
-
-    console.log(user)
-    console.log(username)
     if(!user){
         res.send({
             success: false,
@@ -213,7 +210,7 @@ router.route('/createweb').post( async (req, res) => {
         const day = today.getDate().toString().padStart(2, "0");
         const year = today.getFullYear().toString().slice(-2);
         const formattedDate = `${month}/${day}/${year}`;
-        var id = user.websites.length
+        var id = Math.round(Math.random() * 1000000000)
         if(name.length == 0){
             name = "Untitled Website"
         }
@@ -222,9 +219,16 @@ router.route('/createweb').post( async (req, res) => {
             name: name,
             status: 'Not Published',
             date: formattedDate,
-            settings: {},
+            settings: {
+                primary_color: "#000000",
+                secondary_color: "#F4793E",
+                tertiary_color: "#FFFFFF",
+                font: 'Roboto, "Helvetica Neue", sans-serif',
+              },
             id: id
         })
+        console.log("Create Website")
+        console.log(user.websites)
         await User.updateOne({ _id: user._id }, { $set: { websites: user.websites } })  
     }catch(e){
         res.send({
@@ -248,30 +252,37 @@ router.route('/getwebsite').post( async (req, res) => {
           success: false, 
           payload: 'Internal Error: Request incorrectly formantted ' + e
         });
+        return;
     }
 
     try{
         var user = jwt.verify(token, JWT_SECRET_KEY);
         user = await User.findById( user.id ).lean();
+        console.log("Get Website")
+        console.log(user.websites)
     } catch(e){
         res.send({
             success: false, 
             payload: 'Network Error: Cannot reach server with error ' + e
         });
+        return;
     }
 
     try{
         for(let i = 0; i < user.websites.length; i++){
-            if(user.websites[i].id = id){
+            if(user.websites[i].id == id){
+                console.log("THE COMP")
+                console.log(user.websites[i])
                 res.send({
                     success: true, 
                     payload: user.websites[i]
                 });
-                return;
+                console.log(user.websites[i])
+                break;
             }
         }
-        throw 'Strategy not found'
     }catch(e){
+        console.log("WHY")
         console.log(e)
         res.send({
             success: false, 
@@ -280,10 +291,14 @@ router.route('/getwebsite').post( async (req, res) => {
     }
 })
 
-router.route('/createweb').post( async (req, res) => {
+router.route('/saveweb').post( async (req, res) => {
     try{
         var token = req.body.token;
+        var id = req.body.id;
         var name = req.body.name;
+        var status = req.body.status;
+        var settings = req.body.settings;
+        var xml = req.body.xml;
     } catch(e){
         res.send({
           success: false, 
@@ -301,35 +316,33 @@ router.route('/createweb').post( async (req, res) => {
         });
     }
 
+    console.log("SaveWeb")
+    console.log(user.websites)
     try{
-        const today = new Date();
-        const month = (today.getMonth() + 1).toString().padStart(2, "0");
-        const day = today.getDate().toString().padStart(2, "0");
-        const year = today.getFullYear().toString().slice(-2);
-        const formattedDate = `${month}/${day}/${year}`;
-        var id = user.websites.length
-        if(name.length == 0){
-            name = "Untitled Website"
+        for(let i = 0; i < user.websites.length; i++){
+            if(user.websites[i].id = id){
+                user.websites[i].xml = xml
+                user.websites[i].name = name
+                user.websites[i].settings = settings
+                user.websites[i].status = status
+                break;
+            }
         }
-        user.websites.push({
-            xml: [],
-            name: name,
-            status: 'Not Published',
-            date: formattedDate,
-            settings: {},
-            id: id
-        })
         await User.updateOne({ _id: user._id }, { $set: { websites: user.websites } })  
     }catch(e){
+        console.log("ERROR")
+        console.log(e)
         res.send({
             success: false, 
-            payload: 'Network Error: Failed to add website with error ' + e
+            payload: 'Internal error ' + e
         });
     }
+    console.log("Saveweb2")
+    console.log(user.websites)
 
     res.send({
         success: true, 
-        payload: id
+        payload: 'Updated.'
     });
 })
 

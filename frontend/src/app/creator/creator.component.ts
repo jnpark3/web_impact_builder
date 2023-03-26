@@ -17,7 +17,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
-import { Stripe } from 'stripe';
+import { Stripe } from "stripe";
 const ComponentTypes = require("./component_types");
 const ComponentClass = require("./component_class");
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
@@ -30,7 +30,6 @@ import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
     '<div *ngFor="let block of html_components" [innerHTML]="block"></div>',
 })
 export class CreatorComponent {
-
   save_icon = faSave;
   back_icon = faArrowLeft;
   icon_1 = faTextHeight;
@@ -86,17 +85,26 @@ export class CreatorComponent {
             .getWebsite(this.id)
             .pipe()
             .subscribe((data2: any) => {
+              console.log("PAYLOAD")
+              console.log(data2.payload)
               if (!data2.success) {
                 this.router.navigate(["/error"]);
               }
-
-              this.website_components = data2.payload.xml;
+              const xml = data2.payload.xml;
+              var comps = []
+              for(let i = 0; i < xml.length; i++){
+                comps.push(new ComponentClass(xml[i].name, xml[i].minimap, xml[i].html, xml[i].inputs, xml[i].input_names))
+              }
+              this.website_components = comps;
               this.name = data2.payload.name;
               this.status = data2.payload.status;
               this.date = data2.payload.date;
-              //this.settings = data2.payload.settings
+              this.settings = data2.payload.settings;
+              console.log(this.settings)
+              console.log(data2.payload)
               this.loading = false;
               this.changeType(0);
+              this.regenerate_html();
             });
         });
       });
@@ -154,7 +162,7 @@ export class CreatorComponent {
 
     const myButton = document.getElementById("surveyButton");
     if (myButton) {
-      console.log("BUTTON FOUND")
+      console.log("BUTTON FOUND");
       myButton.addEventListener("click", function () {
         console.log("CLICKED");
         const response_1 = (<HTMLInputElement>(
@@ -181,7 +189,27 @@ export class CreatorComponent {
     }
   }
 
-  save() {}
+  save() {
+    var xml: {}[] = []
+    for(let i = 0; i < this.website_components.length; i++){
+      const obj = {
+        name: this.website_components[i].name,
+        minimap: this.website_components[i].minimap,
+        html: this.website_components[i].html,
+        inputs: this.website_components[i].inputs,
+        input_names: this.website_components[i].input_names
+      }
+      xml.push(obj)
+    }
+    this.appService
+      .saveWeb(this.name, this.status, this.id, xml, this.settings)
+      .pipe()
+      .subscribe((data2: any) => {
+        if (!data2.success) {
+          this.router.navigate(["/error"]);
+        }
+      });
+  }
 
   surveySubmit() {
     console.log("Survey");
@@ -281,5 +309,43 @@ export class CreatorComponent {
     console.log(this.website_components[this.editor_id]);
     this.regenerate_html();
     this.closeEditor();
+  }
+
+  color1() {
+    this.settings.primary_color = "#000000";
+    this.settings.secondary_color = "#F4793E";
+    this.settings.tertiary_color = "#FFFFFF";
+    this.regenerate_html();
+  }
+
+  color2() {
+    this.settings.primary_color = "#222222";
+    this.settings.secondary_color = "#0379B7";
+    this.settings.tertiary_color = "#FFFFFF";
+    this.regenerate_html();
+  }
+
+  color3() {
+    this.settings.primary_color = "#FFFFFF";
+    this.settings.secondary_color = "#CE0F42";
+    this.settings.tertiary_color = "#000000";
+    this.regenerate_html();
+  }
+
+  open_overlay() {
+    const ov = document.getElementById("overlay");
+    if (ov) {
+      ov.style.zIndex = "9999";
+      ov.classList.add("visible");
+    }
+    this.status = "Code generated"
+  }
+
+  close_overlay() {
+    const ov = document.getElementById("overlay");
+    if (ov) {
+      ov.style.zIndex = "-1";
+      ov.classList.remove("visible");
+    }
   }
 }

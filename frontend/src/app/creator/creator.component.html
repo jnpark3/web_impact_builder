@@ -10,36 +10,100 @@
         <div
         *ngFor="let block of html_components; let i = index"
         [innerHTML]="block"
-        >div</div> 
+        ></div> 
     </div>  
 </div>
+<div class="overlay center-column" id="overlay">
+    <div class="card column" style="max-height: 500px;">
+      <div class="text large-padding">Generated HTML</div>
+      <div class="hseparator"></div>
+      <div class="text large-padding" style="overflow: auto; max-width: 500px;">
+        <div *ngFor="let code of website_components" class="box">
+            {{code.generate_html(settings)}}
+        </div>
+     </div>
+      <div class="hseparator"></div>
+      <div class="row large-padding">
+        <button class="button" (click)="close_overlay()">Cancel</button>
+      </div>
+    </div>
+  </div>
 <div *ngIf="loading" class="width center-column gray" style="height: 100vh">
   <div class="bold text">Loading...</div>
 </div>
 <div *ngIf="!loading" class="width gray column" style="height: 100vh">
   <div
     class="large-padding width row center"
-    style="height: fit-content; background-color: white"
+    style="height: fit-content; background-color: white; justify-content: space-between;"
   >
-    <button
-      class="shift_button button center-row"
-      style="aspect-ratio: 1 / 1"
-      (click)="backToMenu()"
-    >
-      <fa-icon class="ico fa-lg shift_button" [icon]="back_icon"></fa-icon>
-    </button>
-    <div class="hgap"></div>
-    <div class="column">
-      <div class="large-text bold height" style="align-items: center">
-        {{ name }}
-      </div>
-      <div class="small-vgap"></div>
-      <div class="small-text">Created: {{ date }} - Status: {{ status }}</div>
+    <div class="row" style="min-width: 400px;">
+        <button
+        class="shift_button button center-row"
+        style="aspect-ratio: 1 / 1"
+        (click)="backToMenu()"
+        >
+        <fa-icon class="ico fa-lg shift_button" [icon]="back_icon"></fa-icon>
+        </button>
+        <div class="hgap"></div>
+        <div class="column">
+        <div class="large-text bold height" style="align-items: center">
+            {{ name }}
+        </div>
+        <div class="small-vgap"></div>
+        <div class="small-text">Created: {{ date }} - Status: {{ status }}</div>
+        </div>
     </div>
-    <button
-      class="shift_button button center-row"
-      (click)="openPreview()"
-    >Preview</button>
+    <div class="row" style="min-width: 400px; justify-content: end;">
+        <button
+        class="shift_button button center-row" style="display: flex; flex-direction: row;"
+        (click)="color3()"
+        >
+            <div style="height: 20px; width: 20px; background-color:white; border-radius: 20px; border: 1px solid black;"></div>
+            <div class="small-hgap"></div>
+            <div style="height: 20px; width: 20px; background-color:#CE0F42; border-radius: 20px; border: 1px solid black;"></div>
+            <div class="small-hgap"></div>
+            <div style="height: 20px; width: 20px; background-color:black; border-radius: 20px; border: 1px solid black;"></div>
+        </button>
+        <div class="hgap"></div>
+        <button
+        class="shift_button button center-row" style="display: flex; flex-direction: row;"
+        (click)="color2()"
+        >
+            <div style="height: 20px; width: 20px; background-color:#222; border-radius: 20px; border: 1px solid black;"></div>
+            <div class="small-hgap"></div>
+            <div style="height: 20px; width: 20px; background-color:#0379B7; border-radius: 20px; border: 1px solid black;"></div>
+            <div class="small-hgap"></div>
+            <div style="height: 20px; width: 20px; background-color:white; border-radius: 20px; border: 1px solid black;"></div>
+        </button>
+        <div class="hgap"></div>
+        <button
+        class="shift_button button center-row" style="display: flex; flex-direction: row;"
+        (click)="color1()"
+        >
+            <div style="height: 20px; width: 20px; background-color:black; border-radius: 20px; border: 1px solid black;"></div>
+            <div class="small-hgap"></div>
+            <div style="height: 20px; width: 20px; background-color:#F4793E; border-radius: 20px; border: 1px solid black;"></div>
+            <div class="small-hgap"></div>
+            <div style="height: 20px; width: 20px; background-color:white; border-radius: 20px; border: 1px solid black;"></div>
+        </button>
+        <div class="large-hgap"></div>
+        <div class="vseparator"></div>
+        <div class="large-hgap"></div>
+        <button
+        class="shift_button button center-row"
+        (click)="openPreview()"
+        >Preview</button>
+        <div class="hgap"></div>
+        <button
+        class="shift_button button center-row"
+        (click)="open_overlay()"
+        >Generate Code</button>
+        <div class="hgap"></div>
+        <button
+        class="shift_button orange_button center-row"
+        (click)="openPreview()"
+        >Connect to Github</button>
+    </div>
   </div>
   <div class="lim_height hseparator"></div>
   <div class="row width large-padding" style="height: calc(100% - 97.5px)">

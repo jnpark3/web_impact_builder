@@ -21,7 +21,7 @@ var c1_1 = new componentContainer(
 var c1_2 = new componentContainer(
     'Title & Description Column',
     [[20, 61, 147, 28], [207, 43, 147, 9], [207, 43 + 19, 147, 9], [207, 43 + 38, 147, 9], [207, 43 + 57, 147, 9]],
-    '<div style="max-width: 100%; height: fit-content;background-color: #primary_color#;display: flex;flex-direction: column;padding: 6vw; padding-top: 9vw; padding-bottom: 9vw;">\n<div style="width: 100%; height: fit-content; margin-bottom: 6vw;">\n<div style="color: #tertiary_color#; font-weight: bold; font-size: 36px; display: flex; flex-direction: row; align-items: center;">#input_0#</div>\n</div>\n<div style="width: 100%; height: fit-content; display: flex; flex-direction: row; align-items: center;">\n<div style="color: #tertiary_color#; font-size: 16px">#input_1#</div>\n</div>/n</div>',
+    '<div style="max-width: 100%; height: fit-content;background-color: #primary_color#;display: flex;flex-direction: column;padding: 6vw; padding-top: 9vw; padding-bottom: 9vw;">\n<div style="width: 100%; height: fit-content; margin-bottom: 6vw;">\n<div style="color: #tertiary_color#; font-weight: bold; font-size: 36px; display: flex; flex-direction: row; align-items: center;">#input_0#</div>\n</div>\n<div style="width: 100%; height: fit-content; display: flex; flex-direction: row; align-items: center;">\n<div style="color: #tertiary_color#; font-size: 16px">#input_1#</div>\n</div>\n</div>',
     ['We need your help to make the world a better place.', lorem],
     ['Header', 'Body Text']
 )
@@ -69,7 +69,7 @@ var c_4 = [c4_1]
 var c5_1 = new componentContainer(
     'Donation',
     [[0, 0, 169, 150], [229, 43, 89, 64]],
-    '<script src="https://donorbox.org/widget.js" paypalExpress="false"></script>\n<div style="width: 100%; max-height: 500px; overflow: hidden; display: flex; flex-direction: row; background-color:#primary_color#; align-items: center; padding: 6vw"><iframe src="https://donorbox.org/embed/fundraising-campaign-10" name="donorbox" allowpaymentrequest="allowpaymentrequest" seamless="seamless" frameborder="0" scrolling="no" height="900px" width="100%" style="margin-right: 6vw; max-width: 500px; min-width: 250px; max-height: 500px;"></iframe><div style="height: 100%; display: flex; flex-direction: column"><div style="font-size: 36px; color: #tertiary_color#; font-weight: bold; margin-bottom: 16px;">#input_0#</div><div style="font-size: 16px; color: #tertiary_color#; max-width: 75%">#input_1#</div></div></div>',
+    '<script src="https://donorbox.org/widget.js" paypalExpress="false">\n</script>\n<div style="box-sizing: border-box; width: 100%; max-height: 600px; overflow: hidden; display: flex; flex-direction: row; background-color:#primary_color#; align-items: center; padding: 6vw">\n<iframe src="https://donorbox.org/embed/fundraising-campaign-10" name="donorbox" allowpaymentrequest="allowpaymentrequest" seamless="seamless" frameborder="0" scrolling="no" height="900px" width="100%" style="margin-right: 6vw; max-width: 500px; min-width: 250px; max-height: 500px;">\n</iframe>\n<div style="height: 100%; display: flex; flex-direction: column">\n<div style="font-size: 36px; color: #tertiary_color#; font-weight: bold; margin-bottom: 16px;">#input_0#</div>\n<div style="font-size: 16px; color: #tertiary_color#; max-width: 75%">#input_1#</div>\n</div>\n</div>',
     ['We need your help.', lorem],
     ['Header', 'Body'],
 )
